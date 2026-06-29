@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, orientation=landscape">
+<title>NXplorers × 美境行动 教师培训</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #ffffff; color: #37474f; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+
+.slide-container { width: 100vw; height: 100vh; position: relative; background: #ffffff; }
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  padding: 36px 52px 90px;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.slide.active { display: flex; }
+.slide.cover { align-items: center; text-align: center; justify-content: center; }
+
+/* ---- 封面渐变（保留现有） ---- */
+.slide.cover {
+  background: linear-gradient(160deg, #E4F4EF 0%, #D4EDE7 25%, #C0E5DC 50%, #A8DDD1 75%, #8FD4C6 100%);
+}
+
+/* ---- 内容页白底 ---- */
+.slide:not(.cover) { background: #ffffff; }
+
+/* ---- 标题 ---- */
+.slide-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2A8C82;
+  margin-bottom: 20px;
+  width: 100%;
+  border-bottom: 2px solid #B8E0D6;
+  padding-bottom: 12px;
+  flex-shrink: 0;
+}
+.slide-subtitle {
+  font-size: 18px;
+  color: #458C84;
+  margin-bottom: 14px;
+  width: 100%;
+  font-weight: 600;
+}
+.body-text {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #455A64;
+  margin-bottom: 14px;
+}
+.highlight { color: #2A8C82; font-weight: 600; }
+
+/* ---- 卡片悬浮效果 ---- */
+.card {
+  background: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 22px 26px;
+  margin-bottom: 16px;
+  width: 100%;
+  box-shadow: 0 2px 0 rgba(42,140,130,0.06), 0 4px 12px rgba(42,140,130,0.10), 0 8px 28px rgba(42,140,130,0.08);
+  border-left: 4px solid #3AA99C;
+}
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #2A8C82;
+  margin-bottom: 10px;
+}
+
+/* ---- 三列悬浮 ---- */
+.three-col { display: flex; gap: 18px; width: 100%; margin-bottom: 16px; flex-wrap: wrap; }
+.col {
+  flex: 1; min-width: 200px;
+  background: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 0 rgba(42,140,130,0.05), 0 4px 12px rgba(42,140,130,0.09), 0 8px 24px rgba(42,140,130,0.07);
+}
+.col-title { font-size: 16px; font-weight: 700; color: #2A8C82; margin-bottom: 10px; }
+
+/* ---- 时间线阶段（三阶段 Overview） ---- */
+.phase-timeline { display: flex; width: 100%; gap: 0; margin-bottom: 18px; }
+.phase { flex: 1; padding: 20px 16px; text-align: center; position: relative; background: #ffffff; border-radius: 14px; margin: 0 6px; box-shadow: 0 2px 10px rgba(42,140,130,0.09), 0 4px 20px rgba(42,140,130,0.06); }
+.phase + .phase { margin-left: 12px; }
+.phase-num { width: 48px; height: 48px; border-radius: 50%; background: #3AA99C; color: #fff; font-size: 22px; font-weight: 900; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; box-shadow: 0 4px 12px rgba(58,169,156,0.35); }
+.phase-name { font-size: 17px; font-weight: 700; color: #2A8C82; margin-bottom: 8px; }
+.phase-question { font-size: 13px; color: #E65100; margin-bottom: 12px; font-style: italic; }
+.tool-tag { display: inline-block; background: rgba(58,169,156,0.12); color: #2A8C82; padding: 3px 10px; border-radius: 10px; font-size: 12px; margin: 3px 4px; }
+
+/* ---- 五大思维网格 ---- */
+.mind-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; width: 100%; margin-bottom: 16px; }
+.mind-card {
+  background: #ffffff;
+  border: 1.5px solid #B8E0D6;
+  border-radius: 14px;
+  padding: 18px 12px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(42,140,130,0.08), 0 4px 20px rgba(42,140,130,0.05);
+}
+.mind-icon { font-size: 32px; margin-bottom: 8px; }
+.mind-name { font-size: 13px; font-weight: 700; color: #2A8C82; margin-bottom: 6px; }
+.mind-desc { font-size: 11px; color: #607D8B; line-height: 1.6; }
+
+/* ---- 表格 ---- */
+table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 16px; font-size: 14px; background: #ffffff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(42,140,130,0.09), 0 4px 24px rgba(42,140,130,0.06); }
+th { background: linear-gradient(135deg, #D4EDE7, #C0E5DC); color: #2A8C82; padding: 12px 14px; text-align: left; font-weight: 700; }
+td { padding: 11px 14px; border-bottom: 1px solid #E8F4F0; vertical-align: top; color: #455A64; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #FAFDFC; }
+
+/* ---- 引用 ---- */
+.quote {
+  font-style: italic;
+  color: #458C84;
+  border-left: 3px solid #3AA99C;
+  padding: 14px 20px;
+  margin: 14px 0;
+  background: rgba(58,169,156,0.05);
+  border-radius: 0 10px 10px 0;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.author { color: #8CAC9C; font-size: 12px; text-align: right; margin-top: 4px; }
+
+/* ---- 列表 ---- */
+.check-list { width: 100%; margin-bottom: 14px; }
+.check-list li { list-style: none; padding: 6px 0 6px 28px; position: relative; font-size: 14px; line-height: 1.7; color: #455A64; }
+.check-list li:before { content: '✓'; position: absolute; left: 0; color: #3AA99C; font-weight: 900; }
+
+/* ---- 教师提示框 ---- */
+.teacher-tip {
+  background: linear-gradient(135deg, #FFF9E6, #FFF3CC);
+  border: none;
+  border-radius: 16px;
+  padding: 16px 22px;
+  width: 100%;
+  margin-top: 6px;
+  box-shadow: 0 2px 0 rgba(245,166,35,0.08), 0 4px 14px rgba(245,166,35,0.12), 0 8px 28px rgba(245,166,35,0.08);
+}
+.teacher-tip-title { font-size: 15px; font-weight: 700; color: #E65100; margin-bottom: 6px; }
+.teacher-tip .body-text { color: #5D4037; margin-bottom: 0; }
+
+/* ---- PBL 时间线 ---- */
+.pbl-timeline { width: 100%; margin-bottom: 16px; }
+.pbl-row { display: flex; align-items: flex-start; margin-bottom: 12px; }
+.pbl-week {
+  width: 90px; flex-shrink: 0;
+  background: rgba(58,169,156,0.12);
+  color: #2A8C82;
+  font-weight: 700;
+  padding: 10px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: center;
+  margin-right: 16px;
+  line-height: 1.5;
+}
+.pbl-content { flex: 1; background: #ffffff; border-radius: 12px; padding: 14px 18px; box-shadow: 0 2px 10px rgba(42,140,130,0.08), 0 4px 20px rgba(42,140,130,0.05); }
+.pbl-nx-phase { font-size: 12px; color: #E65100; font-weight: 600; margin-bottom: 4px; }
+
+/* ---- 案例分析框 ---- */
+.case-box {
+  width: 100%;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  padding: 22px 26px;
+  border-left: 5px solid;
+  box-shadow: 0 2px 10px rgba(42,140,130,0.09), 0 4px 24px rgba(42,140,130,0.06);
+}
+.case-box.l87 { border-color: #3AA99C; background: rgba(58,169,156,0.05); }
+.case-box.l38 { border-color: #E65100; background: rgba(230,81,0,0.04); }
+.case-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.case-box.l87 .case-title { color: #2A8C82; }
+.case-box.l38 .case-title { color: #E65100; }
+.case-meta { font-size: 12px; color: #8CAC9C; margin-bottom: 14px; }
+.case-section { margin-bottom: 12px; }
+.case-section-title { font-size: 14px; font-weight: 600; color: #458C84; margin-bottom: 6px; }
+
+/* ---- 能力雷达图容器 ---- */
+.radar-wrap { display: flex; gap: 28px; width: 100%; margin-bottom: 16px; align-items: flex-start; flex-wrap: wrap; }
+.radar-chart { width: 260px; height: 260px; flex-shrink: 0; position: relative; }
+.radar-svg { width: 100%; height: 100%; }
+.radar-legend { flex: 1; min-width: 200px; }
+.radar-legend-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 13px; }
+.radar-legend-color { width: 14px; height: 14px; border-radius: 3px; margin-right: 10px; flex-shrink: 0; }
+
+/* ---- 封面元素 ---- */
+.cover-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.85);
+  color: #2A8C82;
+  border: 1.5px solid rgba(58,169,156,0.3);
+  border-radius: 24px;
+  padding: 8px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(42,140,130,0.12);
+}
+.cover-title {
+  font-size: 40px;
+  font-weight: 800;
+  color: #1A6B63;
+  line-height: 1.35;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.5);
+}
+.cover-sub {
+  font-size: 17px;
+  color: #2A7A73;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.cover-desc {
+  font-size: 14px;
+  color: #3A7A72;
+  max-width: 600px;
+  line-height: 1.8;
+  background: rgba(255,255,255,0.6);
+  padding: 16px 24px;
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+}
+
+/* ---- 导航 ---- */
+.nav { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 16px; z-index: 999; }
+.nav button {
+  background: #3AA99C;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 11px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(58,169,156,0.35), 0 2px 6px rgba(58,169,156,0.2);
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.nav button:hover { background: #2E9590; }
+.nav button:active { background: #23807B; }
+.nav .page-info { background: #fff; color: #2A8C82; border: 2px solid #B8E0D6; padding: 9px 20px; border-radius: 22px; font-size: 14px; font-weight: 600; display: flex; align-items: center; }
+
+/* ---- 圆点导航 ---- */
+.dots {
+  position: fixed; bottom: 68px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 7px; z-index: 100;
+}
+.dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(42,140,130,0.18); cursor: pointer; transition: all 0.3s;
+}
+.dot.active { background: #3AA99C; box-shadow: 0 0 6px rgba(58,169,156,0.5); }
+
+/* ---- 手机适配 ---- */
+@media (max-width: 768px) {
+  .slide { padding: 22px 18px 100px; }
+  .slide-title { font-size: 22px; }
+  .cover-title { font-size: 26px; }
+  .cover-desc { padding: 12px 16px; font-size: 13px; }
+  .three-col { flex-direction: column; }
+  .col { min-width: 100%; }
+  .mind-grid { grid-template-columns: repeat(3, 1fr); }
+  .phase-timeline { flex-direction: column; gap: 12px; }
+  .phase { margin: 0; }
+  .nav button { padding: 10px 18px; font-size: 14px; }
+  table { font-size: 12px; border-radius: 10px; }
+  th, td { padding: 8px 10px; }
+  .radar-wrap { flex-direction: column; align-items: center; }
+  .radar-chart { width: 220px; height: 220px; }
+  .card, .col, .teacher-tip, .case-box { border-radius: 12px; }
+  .card { padding: 16px 18px; }
+  .col { padding: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="slide-container" id="slideContainer">
+
+<!-- ========== 第1页：封面（保留现有） ========== -->
+<div class="slide cover active" id="slide-1">
+  <div class="cover-badge">Shell 国际教育项目 · 华南师范大学环境教育中心 · 适用于 10–18 岁学生</div>
+  <div class="cover-title">NXplorers × 美境行动<br>教师培训与PBL项目指导</div>
+  <div class="cover-sub">项目式学习（PBL）· 批判性思维 · 创造性解决问题</div>
+  <div class="cover-desc">
+    本培训材料帮助教师理解 NXplorers 核心理念，掌握引导学生完成美境行动项目的方法，培养学生的系统思维、批判性思考和创造性解决问题能力。
+  </div>
+</div>
+
+<!-- ========== 第2页：目录 ========== -->
+<div class="slide" id="slide-2">
+  <div class="slide-title">目录</div>
+  <div class="card" style="max-width:600px;">
+    <div style="font-size:16px;line-height:2.6;color:#455A64;">
+      ① NXplorers 是什么——理念与核心价值<br>
+      ② 五大思维方式——NXthinking 的核心工具<br>
+      ③ PBL 三阶段——Explore · Create · Change<br>
+      ④ 以真实作品为例——NXplorers 与美境行动的融合<br>
+      ⑤ 学生能力发展观察框架<br>
+      ⑥ PBL 项目实施——时间线与教师角色<br>
+      ⑦ 常见挑战与应对——来自一线教师的经验<br>
+      ⑧ 家校协作：让学习延伸到家庭<br>
+      ⑨ 总结与讨论
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第3页：NXplorers 是什么 ========== -->
+<div class="slide" id="slide-3">
+  <div class="slide-title">NXplorers 是什么？</div>
+  <div class="card">
+    <div class="card-title">💡 核心理念</div>
+    <div class="body-text">
+      NXplorers 是一个面向青少年的<span class="highlight">项目式学习（PBL）项目</span>，
+      通过融合<span class="highlight">系统思维、情景规划与变革理论</span>三大方法论，
+      帮助学生发展批判性思维和创造性解决问题的能力，
+      并将这种能力应用到真实的全球挑战中。
+    </div>
+  </div>
+  <div class="three-col">
+    <div class="col">
+      <div class="col-title">🌍 聚焦全球挑战</div>
+      <div class="body-text" style="font-size:13px;">
+        围绕食物·水·能源（Food-Water-Energy Nexus）三大相互依存议题，引导学生思考跨领域的复杂问题。
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">🧠 可迁移的思维工具</div>
+      <div class="body-text" style="font-size:13px;">
+        不只解决一个具体问题——学生掌握的是一套通用思维工具，可以迁移到任何复杂挑战的分析中。
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">🌱 从思考到行动</div>
+      <div class="body-text" style="font-size:13px;">
+        不止于分析——引导学生将想法转化为可执行的行动方案，成为积极的变革推动者。
+      </div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">💡 教师须知</div>
+    <div class="body-text">NXplorers 不是一门"课"，而是一个<span class="highlight">PBL 项目</span>。学生以团队形式，用 6–14 课时完成一个完整的"发现问题 → 设计方案 → 推动变革"过程。教师的角色是<span class="highlight">引导者（facilitator）</span>，不是知识传授者。</div>
+  </div>
+</div>
+
+<!-- ========== 第4页：为什么需要 ========== -->
+<div class="slide" id="slide-4">
+  <div class="slide-title">为什么需要 NXplorers？</div>
+  <div class="card">
+    <div class="card-title">📊 未来最需要的能力</div>
+    <div class="body-text">
+      根据<span class="highlight">《世界经济论坛 2020 年未来就业报告》</span>，
+      批判性思维、创造力和复杂问题解决能力是企业最需要的技能，
+      且这一需求在未来十年将持续增长。
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🗣️ 学生的真实反馈</div>
+    <div class="quote">"这个项目帮助我们看到了同一问题的不同视角。这些工具非常有用，帮助我们看到问题的可能解决方案，以及它会产生多大的影响。"<div class="author">—— NXplorers 学生（巴西）</div></div>
+    <div class="quote">"坦白说，我对这些工具感到惊喜。这些工具非常有创意且有帮助，是以前从未被教授过的全新知识。"<div class="author">—— NXplorers 学生（印度）</div></div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">🎯 与美境行动的契合点</div>
+    <div class="body-text">美境行动要求学生"以自己身边的环境问题为出发点，设计可行的解决方案"——这本身就是 PBL。NXplorers 提供的是<span class="highlight">结构化的思维工具</span>，让学生不只是"做项目"，而是"有方法地做项目"。</div>
+  </div>
+</div>
+
+<!-- ========== 第5页：五大思维方式 ========== -->
+<div class="slide" id="slide-5">
+  <div class="slide-title">五大思维方式（NXthinking）</div>
+  <div class="body-text" style="margin-bottom:18px;">
+    NXthinking 是 NXplorers 的核心——它不是一个"工具"，而是<span class="highlight">五种不同的思考习惯</span>，贯穿 PBL 项目的全过程。
+  </div>
+  <div class="mind-grid">
+    <div class="mind-card">
+      <div class="mind-icon">🌐</div>
+      <div class="mind-name">大局观<br>Big Picture</div>
+      <div class="mind-desc">看到超越局部的完整图景，识别系统中的多重关联和依赖关系。</div>
+    </div>
+    <div class="mind-card">
+      <div class="mind-icon">🔗</div>
+      <div class="mind-name">关联性<br>Connections</div>
+      <div class="mind-desc">理解复杂问题中各要素的相互关联，发现隐藏的模式和反馈回路。</div>
+    </div>
+    <div class="mind-card">
+      <div class="mind-icon">👁️</div>
+      <div class="mind-name">多元视角<br>Perspectives</div>
+      <div class="mind-desc">主动寻找和自己不同的观点，理解不同立场背后的原因和合理性。</div>
+    </div>
+    <div class="mind-card">
+      <div class="mind-icon">🔮</div>
+      <div class="mind-name">未来思维<br>Future</div>
+      <div class="mind-desc">用"如果……会怎样？"的方式思考未来，主动塑造想要的未来。</div>
+    </div>
+    <div class="mind-card">
+      <div class="mind-icon">🔄</div>
+      <div class="mind-name">变革意识<br>Change</div>
+      <div class="mind-desc">思考如何激励他人接受自己的想法，识别推动变革的力量和障碍。</div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">💡 如何在 PBL 中融入五大思维</div>
+    <div class="body-text">不需要专门"教"这五大思维——而是在每个项目阶段，用对应的<span class="highlight">思维提示卡</span>引导学生反思。例如：在 Explore 阶段问"这个问题的系统中还有哪些隐藏的关联？"（关联性）；在 Create 阶段问"10年后如果不改变，这个场景会是什么样子？"（未来思维）。</div>
+  </div>
+</div>
+
+<!-- ========== 第6页：三阶段 Overview ========== -->
+<div class="slide" id="slide-6">
+  <div class="slide-title">PBL 三阶段方法论</div>
+  <div class="body-text" style="margin-bottom:18px;">
+    NXplorers 将一个完整的 PBL 项目划分为三个认知阶段，每个阶段 3–5 课时，共同构成一个<span class="highlight">"理解问题 → 想象未来 → 实现变革"</span>的闭环。
+  </div>
+  <div class="phase-timeline">
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-name">Explore<br>探索阶段</div>
+      <div class="phase-question">"真正的问题是什么？<br>根本原因是什么？"</div>
+      <div style="font-size:12px;color:#607D8B;text-align:left;line-height:1.8;">
+        <span class="tool-tag">系统图谱</span>
+        <span class="tool-tag">根因分析</span>
+        <span class="tool-tag">利益相关者地图</span>
+        <span class="tool-tag">趋势分析</span>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-name">Create<br>创造阶段</div>
+      <div class="phase-question">"如果不改变会怎样？<br>更理想的未来是什么？"</div>
+      <div style="font-size:12px;color:#607D8B;text-align:left;line-height:1.8;">
+        <span class="tool-tag">情景规划</span>
+        <span class="tool-tag">未来回溯</span>
+        <span class="tool-tag">创意组合</span>
+        <span class="tool-tag">可行性评估</span>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-name">Change<br>变革阶段</div>
+      <div class="phase-question">"如何实现理想未来？<br>如何激励他人参与？"</div>
+      <div style="font-size:12px;color:#607D8B;text-align:left;line-height:1.8;">
+        <span class="tool-tag">变革路径图</span>
+        <span class="tool-tag">推动因素分析</span>
+        <span class="tool-tag">障碍识别</span>
+        <span class="tool-tag">行动计划</span>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📁 与美境行动作品类型的对应关系</div>
+    <table>
+      <tr><th>美境行动作品类型</th><th>对应的 NXplorers 阶段</th><th>学生学习成果关注点</th></tr>
+      <tr><td><span class="highlight">设计方案</span></td><td>Explore + Create</td><td>问题是否找得准？系统分析是否有深度？方案的创意性如何？</td></tr>
+      <tr><td><span class="highlight">实施报告</span></td><td>Change（为主）+ Explore 验证</td><td>行动计划是否具体？是否有真实实施证据？影响力是否可感知？</td></tr>
+      <tr><td><span class="highlight">说美境作品</span></td><td>Change 的传播延伸</td><td>是否用多元视角设计传播内容？是否激励了他人参与？</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== 第7页：Explore 详解 ========== -->
+<div class="slide" id="slide-7">
+  <div class="slide-title">第一阶段：Explore 探索——找准真正的问题</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    大多数 PBL 项目失败的原因，是学生<span class="highlight">在理解问题之前就开始想解决方案</span>。Explore 阶段就是要打破这个习惯。
+  </div>
+  <div class="three-col">
+    <div class="col">
+      <div class="col-title">🔧 核心工具</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        <b style="color:#2A8C82">① 系统图谱</b><br>画出问题中各要素的关联图<br><br>
+        <b style="color:#2A8C82">② 根因分析</b><br>用"5个为什么"找到问题根源<br><br>
+        <b style="color:#2A8C82">③ 利益相关者地图</b><br>识别受问题影响的所有角色
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">📝 PBL 活动设计</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        • 小组绘制系统图谱（手绘/A4纸）<br>
+        • "5个为什么"深挖根因工作坊<br>
+        • 角色扮演：不同利益相关者的视角<br>
+        • 实地观察：带着系统思维去"看"<br>
+        • 分享发现：用海报展示探索成果
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">✅ 阶段成果</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        • 清晰的问题定义陈述<br>
+        • 完整的系统图谱（A3尺寸）<br>
+        • 根因分析报告<br>
+        • 利益相关者分析报告<br>
+        • 探索日记（学生个人反思）
+      </div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">⚠️ Explore 阶段最常见的错误</div>
+    <div class="body-text">学生（甚至老师）会忍不住提前想"怎么解决"。要不断提醒：<span class="highlight">"先理解问题，再想办法。"</span>可以设置一条规则：Explore 阶段<span class="highlight">禁止提解决方案</span>，违反的小组要表演一个小节目。</div>
+  </div>
+</div>
+
+<!-- ========== 第8页：Create 详解 ========== -->
+<div class="slide" id="slide-8">
+  <div class="slide-title">第二阶段：Create 创造——想象并设计未来</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    Create 阶段鼓励学生<span class="highlight">大胆想象</span>，同时用情景规划工具确保创意不脱离现实。
+  </div>
+  <div class="three-col">
+    <div class="col">
+      <div class="col-title">🔧 核心工具</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        <b style="color:#2A8C82">① 情景规划</b><br>描绘3种未来情景<br><br>
+        <b style="color:#2A8C82">② 未来回溯</b><br>从理想未来倒推所需步骤<br><br>
+        <b style="color:#2A8C82">③ 创意组合矩阵</b><br>将多个创意融合成综合方案
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">📝 PBL 活动设计</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        • 情景写作："2050年的校园水资源"<br>
+        • 创意脑暴：不受限制地提出想法<br>
+        • 组合工作坊：将多个创意融合<br>
+        • 可行性评估：用矩阵评估各方案<br>
+        • 方案展示：用模型/海报展示创意
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">✅ 阶段成果</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        • 3种未来情景描述（各300字）<br>
+        • "偏好的未来"愿景声明<br>
+        • 综合解决方案设计说明书<br>
+        • 可行性评估报告<br>
+        • 创意方案展示材料
+      </div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">💡 Create 阶段的平衡</div>
+    <div class="body-text">要鼓励学生<span class="highlight">大胆想象</span>，但同时引导他们区分"幻想"和"基于趋势的合理预测"。可以引用科幻作品中的场景来激发想象力，再用"这个想法有哪些部分是现实中可以实现的？"来拉回可行性。</div>
+  </div>
+</div>
+
+<!-- ========== 第9页：Change 详解 ========== -->
+<div class="slide" id="slide-9">
+  <div class="slide-title">第三阶段：Change 变革——把想法变成行动</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    Change 阶段是 PBL 项目<span class="highlight">"落地"</span>的关键。许多学生方案止步于"设计"，NXplorers 要求他们走到"实施"。
+  </div>
+  <div class="three-col">
+    <div class="col">
+      <div class="col-title">🔧 核心工具</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        <b style="color:#2A8C82">① 变革路径图</b><br>绘制从现状到理想未来的步骤<br><br>
+        <b style="color:#2A8C82">② 推动因素/障碍分析</b><br>预判并制定克服障碍的策略<br><br>
+        <b style="color:#2A8C82">③ SMART 行动表</b><br>将方案转化为具体可执行计划
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">📝 PBL 活动设计</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        • 行动计划工作坊：制定详细时间表<br>
+        • 说服演讲：向"决策者"展示方案<br>
+        • 同伴反馈：用"六顶思考帽"评估<br>
+        • 试点设计：小规模测试解决方案<br>
+        • 成果展示：向社区/家长展示
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">✅ 阶段成果</div>
+      <div style="font-size:13px;line-height:2;color:#607D8B;">
+        • 完整行动计划（含甘特图）<br>
+        • 变革推动因素/障碍分析报告<br>
+        • 试点实施成果记录<br>
+        • 影响力评估数据/证据<br>
+        • 项目复盘反思日记
+      </div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">⚠️ Change 阶段的关键问题</div>
+    <div class="body-text">不断问学生：<span class="highlight">"这个方案真的能被实施吗？谁来出钱？谁来执行？如果遇到阻力怎么办？"</span>鼓励学生进行小范围试点，用真实数据验证方案的可行性。美境行动的"实施报告"正是 Change 阶段成果的最好呈现。</div>
+  </div>
+</div>
+
+<!-- ========== 第10页：案例L87 ========== -->
+<div class="slide" id="slide-10">
+  <div class="slide-title">以真实作品为例（一）：L87 心慈园水池改造</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    以下是<span class="highlight">第二十七届美境行动全国特等奖</span>作品，展示 NXplorers 三阶段如何在一个真实 PBL 项目中落地。
+  </div>
+  <div class="case-box l87">
+    <div class="case-title">L87　初中组·调查研究　心慈灵韵水景重塑——心慈园水池环境改造</div>
+    <div class="case-meta">获奖等级：特等奖　作品类型：实施报告</div>
+    <div class="case-section">
+      <div class="case-section-title">🔍 Explore 阶段：问题界定与系统分析</div>
+      <div class="body-text">
+        <b style="color:#2A8C82">真实问题：</b>学校心慈园的水池长期存在水质问题（浊度偏高、溶氧偏低、有异味），学生从"感官观察"入手，测量了水质指标（浊度、溶氧、pH值、氨氮等），<span class="highlight">用量化数据定义问题</span>，而非凭感觉描述。<br><br>
+        <b style="color:#2A8C82">NXplorers 工具应用：</b>学生绘制了"水池生态系统"系统图谱，识别出"落叶→有机物分解→氨氮升高→鱼类死亡→水质恶化"的正反馈回路，找到了问题的<span class="highlight">系统性根因</span>（不只是"水脏了"，而是生态循环断裂）。
+      </div>
+    </div>
+    <div class="case-section">
+      <div class="case-section-title">💡 Create 阶段：创意方案与情景规划</div>
+      <div class="body-text">
+        <b style="color:#2A8C82">情景规划：</b>学生描绘了三种情景——①不干预：水池生态持续恶化；②简单换水：短期改善但无法根治；③生态重建：引入水生植物+曝气装置+生态过滤。<br><br>
+        <b style="color:#2A8C82">方案创意：</b>设计了"生态浮岛"+人工湿地组合方案，选用本地水生植物（芦苇、菖蒲、睡莲），用 PVC 管搭建浮岛框架，<span class="highlight">成本控制在 250 元以内</span>，体现了工程思维与经济思维的平衡。
+      </div>
+    </div>
+    <div class="case-section">
+      <div class="case-section-title">🔄 Change 阶段：实施与影响力</div>
+      <div class="body-text">
+        <b style="color:#2A8C82">行动计划：</b>分为"水质改善→生态重建→长效维护"三个阶段，制定了详细的时间表和责任分工。<br><br>
+        <b style="color:#2A8C82">变革推动：</b>学生向学校申请审批、争取经费支持、组织同学参与维护，<span class="highlight">展现了真实的变革推动能力</span>。实施后进行水质复测，用数据证明改善效果（浊度从 200+ mg/L 降至 10+ mg/L，溶氧从 0.8 mg/L 升至 5+ mg/L）。
+      </div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">🌟 为什么这是特等奖作品？</div>
+    <div class="body-text">① <span class="highlight">问题界定有数据</span>（不是"水很脏"，而是"浊度 200+ mg/L"）；② <span class="highlight">方案有系统思维</span>（不只是换水，而是重建生态循环）；③ <span class="highlight">实施有变革理论</span>（谁来做？钱从哪来？如何持续？）；④ <span class="highlight">成果可量化</span>（实施前后水质数据对比）。这四个特征，正是 NXplorers 所培养的核心能力。</div>
+  </div>
+</div>
+
+<!-- ========== 第11页：案例L38 ========== -->
+<div class="slide" id="slide-11">
+  <div class="slide-title">以真实作品为例（二）：L38 旗峰公园动物通道</div>
+  <div class="case-box l38">
+    <div class="case-title">L38　小学组·社会实践　"桥"见生命——旗峰公园自然教育径动物通道微生态修复</div>
+    <div class="case-meta">获奖等级：特等奖　作品类型：设计方案</div>
+    <div class="case-section">
+      <div class="case-section-title">🔍 Explore 阶段：发现"看不见"的问题</div>
+      <div class="body-text">
+        <b style="color:#E65100">独特视角：</b>学生观察到旗峰公园的自然教育径上"有动物痕迹，但没有动物通道"——道路将栖息地割裂，形成了<span class="highlight">生态孤岛</span>。这个问题不是"显而易见的污染"，而是需要<span class="highlight">系统思维</span>才能发现的隐藏问题。<br><br>
+        <b style="color:#E65100">利益相关者分析：</b>学生识别了多个利益相关者——公园管理处（决策者）、游客（干扰源）、本地居民（支持者）、野生动物（受益者但无法发声），并设计了针对不同角色的沟通策略。
+      </div>
+    </div>
+    <div class="case-section">
+      <div class="case-section-title">💡 Create 阶段：从"过马路"到"生态廊道"</div>
+      <div class="body-text">
+        <b style="color:#E65100">创意演进：</b>最初想法是"建一座动物天桥"，但经过可行性评估后，改为"<span class="highlight">微型动物通道+本土植物恢复</span>"组合方案——成本更低、维护更简单、生态效益更持久。<br><br>
+        <b style="color:#E65100">未来思维：</b>学生描绘了"5年后的旗峰公园"——自然教育径成为"生态廊道示范点"，连接起更大的栖息地网络。这个未来情景成为方案设计的核心驱动力。
+      </div>
+    </div>
+    <div class="case-section">
+      <div class="case-section-title">🔄 Change 阶段：多方协作的变革路径</div>
+      <div class="body-text">
+        <b style="color:#E65100">变革推动：</b>学生不只是"设计通道"，而是设计了一套<span class="highlight">"提案→试点→推广"</span>的变革路径。他们制作了模型、准备了向公园管理处的提案PPT、设计了游客科普牌，体现了完整的 Change 阶段能力。<br><br>
+        <b style="color:#E65100">多元视角：</b>方案考虑了"如果游客不配合怎么办？""如果管理处不同意怎么办？"——提前识别了变革障碍，并制定了应对策略（科普牌+志愿者引导）。
+      </div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">🌟 小学组特等奖的启示</div>
+    <div class="body-text">小学组学生（约 10–12 岁）也能完成高质量的 NXthinking 实践！关键在于：① 问题要<span class="highlight">贴近学生的感知</span>（他们能亲眼看到道路对动物的阻隔）；② 工具要<span class="highlight">简化但不失真</span>（系统图谱用手绘，不需要专业软件）；③ 成果展示要<span class="highlight">多元形式</span>（模型+PPT+科普牌，而不只是文字报告）。</div>
+  </div>
+</div>
+
+<!-- ========== 第12页：两案例对比 ========== -->
+<div class="slide" id="slide-12">
+  <div class="slide-title">两案例对比：NXplorers 在各阶段的体现</div>
+  <table>
+    <thead>
+      <tr>
+        <th>对比维度</th>
+        <th style="color:#2A8C82;">L87 心慈园水池（初中·调查研究）</th>
+        <th style="color:#E65100;">L38 动物通道（小学·社会实践）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:#458C84;font-weight:600;">问题类型</td>
+        <td>量化环境问题（水质数据驱动）</td>
+        <td>质性生态问题（空间感知驱动）</td>
+      </tr>
+      <tr>
+        <td style="color:#458C84;font-weight:600;">Explore 工具</td>
+        <td>系统图谱 + 水质数据趋势分析</td>
+        <td>系统图谱（生态走廊） + 利益相关者地图</td>
+      </tr>
+      <tr>
+        <td style="color:#458C84;font-weight:600;">Create 创意特点</td>
+        <td>工程方案（生态浮岛+人工湿地）</td>
+        <td>空间设计（微型通道+植物恢复）</td>
+      </tr>
+      <tr>
+        <td style="color:#458C84;font-weight:600;">Change 变革路径</td>
+        <td>学校审批→同学协作→长期维护机制</td>
+        <td>管理处提案→科普牌→志愿者体系</td>
+      </tr>
+      <tr>
+        <td style="color:#458C84;font-weight:600;">数据/证据类型</td>
+        <td>水质量化数据（前后对比）</td>
+        <td>生态观察记录 + 模型展示</td>
+      </tr>
+      <tr>
+        <td style="color:#458C84;font-weight:600;">核心 NX 能力体现</td>
+        <td>系统思维（生态循环）+ 未来思维（长期维护）</td>
+        <td>关联性（生态走廊）+ 多元视角（多方沟通）</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📌 对教学与学生成长的启示</div>
+    <div class="body-text">
+      指导学生参加美境行动时，<span class="highlight">不是看"有没有用 NXplorers 这个词"</span>，而是看学生的作品是否体现了 NXthinking 的核心特征：<br><br>
+      ① <span class="highlight">问题是否有系统分析？</span>（而不只是描述现象）<br>
+      ② <span class="highlight">方案是否有创意且可行？</span>（而不只是模仿别人的想法）<br>
+      ③ <span class="highlight">实施是否有变革路径？</span>（而不只是"我们会努力做"）<br>
+      ④ <span class="highlight">成果是否有证据支持？</span>（而不只是"我们认为有效果"）<br>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第13页：学生能力发展观察框架 ========== -->
+<div class="slide" id="slide-13">
+  <div class="slide-title">学生能力发展观察框架——基于 NXthinking</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    美境行动不只是一次"参赛"，而是<span class="highlight">对学生在五大思维维度上的能力发展做出诊断</span>的机会。以下框架可直接用于作品指导和学生反馈。
+  </div>
+  <div class="card">
+    <div class="card-title">📊 五大维度观察标准（每个维度 20 分，共 100 分）</div>
+    <table>
+      <thead>
+        <tr><th>维度</th><th>16–20 分（卓越）</th><th>11–15 分（良好）</th><th>6–10 分（基础）</th><th>0–5 分（未体现）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#2A8C82;font-weight:600;">大局观</td>
+          <td>能识别 8+ 个系统要素，清晰描述多重关联和反馈回路</td>
+          <td>能识别 4–7 个系统要素，描述主要关联</td>
+          <td>能识别 2–3 个要素，关联描述较浅</td>
+          <td>只描述单一要素或现象</td>
+        </tr>
+        <tr>
+          <td style="color:#2A8C82;font-weight:600;">关联性</td>
+          <td>找到隐藏关联和根因，用数据或证据支持分析</td>
+          <td>找到部分隐藏关联，根因分析有一定深度</td>
+          <td>只找到表面关联，根因分析较浅</td>
+          <td>没有关联分析，只描述问题现象</td>
+        </tr>
+        <tr>
+          <td style="color:#2A8C82;font-weight:600;">多元视角</td>
+          <td>主动纳入 4+ 类利益相关者视角，方案包容多元需求</td>
+          <td>纳入 2–3 类利益相关者视角，有一定包容性</td>
+          <td>只考虑了 1–2 类视角，主要为自己的视角</td>
+          <td>没有体现多元视角</td>
+        </tr>
+        <tr>
+          <td style="color:#2A8C82;font-weight:600;">未来思维</td>
+          <td>描绘了清晰的"偏好未来"，行动方案直接通向该未来</td>
+          <td>有未来愿景描述，行动方案与未来有逻辑关联</td>
+          <td>有模糊的未来描述，行动方案关联不强</td>
+          <td>没有未来展望，只关注当下</td>
+        </tr>
+        <tr>
+          <td style="color:#2A8C82;font-weight:600;">变革意识</td>
+          <td>识别了主要推动因素和障碍，有具体可行的变革路径</td>
+          <td>识别了部分推动因素/障碍，有行动计划的框架</td>
+          <td>有简单行动计划，但对障碍考虑不足</td>
+          <td>没有变革路径，只有笼统的"我们会努力"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ========== 第14页：能力雷达图 ========== -->
+<div class="slide" id="slide-14">
+  <div class="slide-title">能力雷达图——直观呈现学生成长</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    作品指导结束后，为每个学生团队生成能力雷达图，<span class="highlight">不只给出一个总分，而是呈现五个维度的能力画像</span>，用于反馈和成长追踪。
+  </div>
+  <div class="radar-wrap">
+    <!-- L87 雷达图 -->
+    <div>
+      <div style="text-align:center;color:#2A8C82;font-weight:700;margin-bottom:10px;font-size:15px;">L87 心慈园水池（初中·特等奖）</div>
+      <div class="radar-chart">
+        <svg class="radar-svg" viewBox="0 0 260 260">
+          <polygon points="130,30 236,100 200,210 60,210 24,100" fill="rgba(58,169,156,0.05)" stroke="rgba(58,169,156,0.2)" stroke-width="1"/>
+          <polygon points="130,62 204,116 172,186 88,186 56,116" fill="rgba(58,169,156,0.08)" stroke="rgba(58,169,156,0.15)" stroke-width="1"/>
+          <polygon points="130,94 172,132 144,162 116,162 88,132" fill="rgba(58,169,156,0.12)" stroke="rgba(58,169,156,0.1)" stroke-width="1"/>
+          <polygon points="130,42 228,96 190,195 70,195 32,104" fill="rgba(58,169,156,0.18)" stroke="#3AA99C" stroke-width="2"/>
+          <text x="130" y="22" text-anchor="middle" fill="#2A8C82" font-size="11" font-weight="700">大局观 18</text>
+          <text x="244" y="100" text-anchor="start" fill="#458C84" font-size="11">关联性 19</text>
+          <text x="208" y="225" text-anchor="middle" fill="#458C84" font-size="11">多元视角 14</text>
+          <text x="52" y="225" text-anchor="middle" fill="#458C84" font-size="11">未来思维 17</text>
+          <text x="16" y="104" text-anchor="start" fill="#458C84" font-size="11">变革意识 18</text>
+          <circle cx="130" cy="130" r="3" fill="#3AA99C"/>
+        </svg>
+      </div>
+    </div>
+    <!-- L38 雷达图 -->
+    <div>
+      <div style="text-align:center;color:#E65100;font-weight:700;margin-bottom:10px;font-size:15px;">L38 动物通道（小学·特等奖）</div>
+      <div class="radar-chart">
+        <svg class="radar-svg" viewBox="0 0 260 260">
+          <polygon points="130,30 236,100 200,210 60,210 24,100" fill="rgba(230,81,0,0.04)" stroke="rgba(230,81,0,0.15)" stroke-width="1"/>
+          <polygon points="130,62 204,116 172,186 88,186 56,116" fill="rgba(230,81,0,0.07)" stroke="rgba(230,81,0,0.12)" stroke-width="1"/>
+          <polygon points="130,94 172,132 144,162 116,162 88,132" fill="rgba(230,81,0,0.10)" stroke="rgba(230,81,0,0.08)" stroke-width="1"/>
+          <polygon points="130,46 224,104 184,200 64,200 36,100" fill="rgba(230,81,0,0.16)" stroke="#E65100" stroke-width="2"/>
+          <text x="130" y="22" text-anchor="middle" fill="#E65100" font-size="11" font-weight="700">大局观 16</text>
+          <text x="244" y="100" text-anchor="start" fill="#458C84" font-size="11">关联性 17</text>
+          <text x="208" y="225" text-anchor="middle" fill="#458C84" font-size="11">多元视角 18</text>
+          <text x="52" y="225" text-anchor="middle" fill="#458C84" font-size="11">未来思维 15</text>
+          <text x="16" y="104" text-anchor="start" fill="#458C84" font-size="11">变革意识 16</text>
+          <circle cx="130" cy="130" r="3" fill="#E65100"/>
+        </svg>
+      </div>
+    </div>
+    <!-- 雷达图说明 -->
+    <div class="radar-legend">
+      <div class="card-title">📈 雷达图解读</div>
+      <div class="body-text" style="font-size:13px;margin-bottom:12px;">
+        <b style="color:#2A8C82">L87（初中）</b>：关联性（19分）和大局观（18分）特别突出，体现了初中组学生应有的数据分析与系统思维能力。多元视角（14分）相对较弱，是可以在未来项目中加强的方向。<br><br>
+        <b style="color:#E65100">L38（小学）</b>：五大维度发展均衡，多元视角（18分）尤其突出，体现了小学组学生在社会沟通与包容性思考上的优势。未来思维（15分）有提升空间，可以在后续项目中加强"未来情景描绘"训练。
+      </div>
+      <div class="teacher-tip" style="padding:10px 14px;">
+        <div class="teacher-tip-title">💡 如何使用雷达图</div>
+        <div class="body-text" style="font-size:12px;">① 指导学生时每个维度单独观察，不提前加总；② 向学生展示雷达图，让他们看到自己的"能力轮廓"；③ 下一届项目时，针对上一届的"短板维度"设计专门活动。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第15页：PBL 实施时间线 ========== -->
+<div class="slide" id="slide-15">
+  <div class="slide-title">PBL 项目实施时间线（教师版）</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    NXplorers 项目可以以<span class="highlight">连续 PBL 周</span>或<span class="highlight">跨周分散实施</span>两种方式进行。以下以 Senior 级别（初中·10–12 课时）为例。
+  </div>
+  <div class="pbl-timeline">
+    <div class="pbl-row">
+      <div class="pbl-week">第1–2<br>课时</div>
+      <div class="pbl-content">
+        <div class="pbl-nx-phase">📦 项目导入（Explore 预备）</div>
+        <div class="body-text">介绍 NXplorers 理念，用生活中的简单例子解释"系统思维"（如：校园垃圾分类的系统）。分组（3–5人一组，确保多元能力组合）。布置"找一个问题"的家庭作业。</div>
+      </div>
+    </div>
+    <div class="pbl-row">
+      <div class="pbl-week" style="background:rgba(58,169,156,0.18);">第3–5<br>课时</div>
+      <div class="pbl-content">
+        <div class="pbl-nx-phase">🔍 Explore 阶段核心</div>
+        <div class="body-text">绘制系统图谱 → "5个为什么"根因分析 → 利益相关者地图 → 小组分享探索成果（其他组提问，培养多元视角）。<span style="color:#E65100;">← 此阶段成果对应美境行动"设计方案"的问题分析部分</span></div>
+      </div>
+    </div>
+    <div class="pbl-row">
+      <div class="pbl-week" style="background:rgba(58,169,156,0.18);">第6–8<br>课时</div>
+      <div class="pbl-content">
+        <div class="pbl-nx-phase">💡 Create 阶段核心</div>
+        <div class="body-text">描绘三种未来情景 → 用"未来回溯"工具倒推步骤 → 创意组合工作坊 → 可行性矩阵评估 → 完成方案设计。<span style="color:#E65100;">← 此阶段成果对应美境行动"设计方案"的方案部分</span></div>
+      </div>
+    </div>
+    <div class="pbl-row">
+      <div class="pbl-week" style="background:rgba(58,169,156,0.18);">第9–11<br>课时</div>
+      <div class="pbl-content">
+        <div class="pbl-nx-phase">🔄 Change 阶段核心</div>
+        <div class="body-text">制定 SMART 行动计划 → 识别推动因素和障碍 → 设计传播/说服策略 → 小范围试点（如有条件）。<span style="color:#E65100;">← 此阶段成果对应美境行动"实施报告"</span></div>
+      </div>
+    </div>
+    <div class="pbl-row">
+      <div class="pbl-week">第12<br>课时</div>
+      <div class="pbl-content">
+        <div class="pbl-nx-phase">📊 成果展示与反思</div>
+        <div class="body-text">各小组展示完整方案/实施成果 → 用"六顶思考帽"进行同伴评估 → 教师基于五大思维维度点评 → 填写反思日记。<span style="color:#E65100;">← 此阶段产出用于美境行动作品提交</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第16页：常见挑战与应对 ========== -->
+<div class="slide" id="slide-16">
+  <div class="slide-title">常见挑战与应对策略</div>
+  <div class="card" style="padding:18px 22px;">
+    <div style="font-size:14px;line-height:2.4;">
+      <div style="color:#E65100;font-weight:700;margin-bottom:6px;">❌ 挑战1：学生急于提出解决方案，不愿意深入探索问题</div>
+      <div style="color:#455A64;margin-bottom:18px;padding-left:18px;"><span class="highlight">应对：</span>设置"禁止提方案"规则；用"根因分析"工具让学生体验"深挖"的乐趣；分享"浅层解决方案为什么失败"的真实案例（可参考 L87 实施报告中"单纯换水无效"的对比实验）。</div>
+
+      <div style="color:#E65100;font-weight:700;margin-bottom:6px;">❌ 挑战2：系统图谱画得太简单，没有识别隐藏关联</div>
+      <div style="color:#455A64;margin-bottom:18px;padding-left:18px;"><span class="highlight">应对：</span>提供"关联提示卡"（如：这个问题和"钱"有关吗？和"政策"有关吗？和"习惯"有关吗？）；让学生用不同颜色标注直接/间接关联；参考 L38 的系统图谱（生态走廊关联了植物、动物、游客、道路、管理处等多个要素）。</div>
+
+      <div style="color:#E65100;font-weight:700;margin-bottom:6px;">❌ 挑战3：创意阶段想法太天马行空，完全不可行</div>
+      <div style="color:#455A64;margin-bottom:18px;padding-left:18px;"><span class="highlight">应对：</span>用"可行性矩阵"（成本·技术难度·时间·影响力）引导评估；邀请社区成员/家长参与评审；强调"创意可以大胆，但实施计划必须可行"——L87 的 250 元成本控制在初中组作品中堪称典范。</div>
+
+      <div style="color:#E65100;font-weight:700;margin-bottom:6px;">❌ 挑战4：Change 阶段制定的计划太笼统，无法执行</div>
+      <div style="color:#455A64;padding-left:18px;"><span class="highlight">应对：</span>用 SMART 原则审查每个行动；要求学生制定"下周就能开始"的第一步；组织"方案可行性答辩"（教师和其他组提问），参考 L87 实施报告中详细到"第几周完成什么"的时间表。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第17页：家校协作 ========== -->
+<div class="slide" id="slide-17">
+  <div class="slide-title">家校协作：让 NXplorers 走进家庭</div>
+  <div class="body-text" style="margin-bottom:14px;">
+    NXplorers 的培养不只发生在学校——<span class="highlight">家庭是系统思维培养的延伸空间</span>，家长的参与能显著提升项目的影响力。
+  </div>
+  <div class="three-col">
+    <div class="col">
+      <div class="col-title">👨👩👧 家长可以做什么</div>
+      <div style="font-size:13px;line-height:2;color:#455A64;">
+        • 和孩子一起<span class="highlight">观察身边的环境问题</span>（不只是听孩子讲，而是一起看）<br>
+        • 在孩子做"根因分析"时，<span class="highlight">提问而不是给答案</span>（"你觉得为什么会这样？"）<br>
+        • 支持孩子的<span class="highlight">小规模试点</span>（如在家里设垃圾分类角）<br>
+        • 用<span class="highlight">"如果……会怎样？"</span>的方式和孩子讨论未来<br>
+        • 为孩子的变革行动<span class="highlight">提供资源和人脉支持</span>（如联系社区）
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">📝 给家长的一封信</div>
+      <div style="background:#FAFDFC;border-radius:12px;padding:16px 20px;font-size:12px;line-height:1.9;color:#455A64;border:1px solid #E0F0EB;">
+        <div style="color:#2A8C82;font-weight:700;margin-bottom:8px;">尊敬的家长：</div>
+        您的孩子正在参与"美境行动"——一个用 NXplorers 方法解决环境问题的项目式学习（PBL）活动。<br><br>
+        在这个项目中，孩子不只是"做环保"，而是在<span style="color:#2A8C82;">系统思维、批判性思考、创造性解决问题</span>等未来最核心的能力上得到锻炼。<br><br>
+        您不需要是环保专家——只需要<span style="color:#2A8C82;">做一个好奇的提问者</span>，而非直接的答案给予者。当孩子和您分享他们的项目时，多问几个"为什么"和"如果不改变会怎样？"，就是最好的支持。<br><br>
+        <div style="color:#8CAC9C;font-size:11px;">—— 华南师范大学环境教育中心</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">🌱 学生成长可以看到</div>
+      <div style="font-size:13px;line-height:2;color:#455A64;">
+        • <span class="highlight">更善于提问</span>：不再满足于表面答案<br>
+        • <span class="highlight">更系统思考</span>：能看到问题的多方面关联<br>
+        • <span class="highlight">更有行动力</span>：从"抱怨问题"到"设计方案"<br>
+        • <span class="highlight">更包容视角</span>：能理解不同人的立场<br>
+        • <span class="highlight">更面向未来</span>：能主动想象并塑造理想未来
+      </div>
+    </div>
+  </div>
+  <div class="teacher-tip">
+    <div class="teacher-tip-title">💡 教师如何动员家长</div>
+    <div class="body-text">在启动美境行动时，<span class="highlight">专门召开一次家长说明会</span>（线上或线下），用10分钟介绍 NXplorers 的五大思维方式，展示往届学生的能力成长案例（如 L87、L38），让家长理解"为什么孩子在学校做环保项目"。家长理解了，支持才会到位。</div>
+  </div>
+</div>
+
+<!-- ========== 第18页：总结 ========== -->
+<div class="slide" id="slide-18">
+  <div class="slide-title">总结：NXplorers × 美境行动的核心价值</div>
+  <div class="three-col">
+    <div class="col">
+      <div class="col-title">🎯 对学生</div>
+      <div style="font-size:13px;line-height:2;color:#455A64;">
+        ✓ 掌握一套可迁移的思维工具<br>
+        ✓ 提升批判性思维和创造力<br>
+        ✓ 学会用系统的方式分析复杂问题<br>
+        ✓ 从"知道问题"到"解决问题"<br>
+        ✓ 培养全球视野和社会责任感
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">🎓 对教师</div>
+      <div style="font-size:13px;line-height:2;color:#455A64;">
+        ✓ 获得一套完整的 PBL 项目工具包<br>
+        ✓ 改变"灌输式"教学为"引导式"教学<br>
+        ✓ 提升学生的课堂参与度和主动性<br>
+        ✓ 与科学/地理/生物课程深度融合<br>
+        ✓ 获得国际认证教育项目的支持
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-title">🌏 对广东省</div>
+      <div style="font-size:13px;line-height:2;color:#455A64;">
+        ✓ 提升环境教育的系统性和深度<br>
+        ✓ 培养具有国际视野的环保人才<br>
+        ✓ 美境行动作品质量显著提升<br>
+        ✓ 形成可推广的广东特色教育模式<br>
+        ✓ 向壳牌总部展示教育创新成果
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:20px;text-align:center;">
+    <div style="font-size:22px;color:#2A8C82;font-weight:700;margin-bottom:12px;">感谢聆听！</div>
+    <div style="font-size:15px;color:#458C84;line-height:1.8;">
+      华南师范大学环境教育中心<br>
+      美境行动官网：（待补充）<br>
+      NXplorers 全球官网：<a href="https://nxplorers.com" style="color:#2A8C82;" target="_blank">nxplorers.com</a>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:16px;">
+    <span class="cover-badge">Q & A 开放讨论</span>
+  </div>
+</div>
+
+</div><!-- end slide-container -->
+
+<!-- 导航 -->
+<div class="nav">
+  <button onclick="prevSlide()">← 上一页</button>
+  <span class="page-info" id="pageInfo">1 / 18</span>
+  <button onclick="nextSlide()">下一页 →</button>
+</div>
+<div class="dots" id="dots"></div>
+
+<script>
+let current = 1;
+const total = 18;
+
+function renderDots() {
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  for (let i = 1; i <= total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === current ? ' active' : '');
+    d.onclick = () => goSlide(i);
+    dots.appendChild(d);
+  }
+}
+function goSlide(n) {
+  document.getElementById('slide-' + current).classList.remove('active');
+  current = Math.max(1, Math.min(n, total));
+  document.getElementById('slide-' + current).classList.add('active');
+  document.getElementById('pageInfo').textContent = current + ' / ' + total;
+  renderDots();
+  document.getElementById('slideContainer').scrollTop = 0;
+}
+function nextSlide() { goSlide(current + 1); }
+function prevSlide() { goSlide(current - 1); }
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+});
+
+// 触摸滑动支持（手机端）
+let touchStartX = 0;
+let touchStartY = 0;
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}, {passive: true});
+
+document.addEventListener('touchend', function(e) {
+  const dx = e.changedTouches[0].screenX - touchStartX;
+  const dy = e.changedTouches[0].screenY - touchStartY;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+    if (dx < 0) nextSlide(); else prevSlide();
+  }
+}, {passive: true});
+
+renderDots();
+</script>
+</body>
+</html>
